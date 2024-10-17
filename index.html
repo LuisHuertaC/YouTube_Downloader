@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargador de YouTube</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Descargar Video o Audio de YouTube</h1>
+        <form action="/download" method="POST">
+            <label for="url">URL del Video:</label>
+            <input type="text" id="url" name="url" required>
+
+            <label for="format">Formato:</label>
+            <select id="format" name="format" required>
+                <option value="audio">Audio</option>
+                <option value="video">Video</option>
+            </select>
+
+            <div id="resolution-container" style="display: none;">
+                <label for="resolution">Resolución:</label>
+                <select id="resolution" name="resolution">
+                    <option value="best">Mejor Calidad</option>
+                    <option value="1080">1080p</option> 
+                    <option value="720">720p</option>
+                    <option value="480">480p</option>
+                    <option value="360">360p</option>
+                    <option value="240">240p</option>
+                    <option value="144">144p</option>
+                </select>
+            </div>
+
+            <button type="submit">Descargar</button>
+        </form>
+
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('format').addEventListener('change', function() {
+            const resolutionContainer = document.getElementById('resolution-container');
+            if (this.value === 'video') {
+                resolutionContainer.style.display = 'block';
+            } else {
+                resolutionContainer.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
